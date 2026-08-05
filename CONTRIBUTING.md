@@ -1,6 +1,17 @@
-# Contributing
+# Contributing to twitchdl
 
-This repository is a base template for derived SUBCULT projects. Keep changes small, reviewable, and useful across stacks.
+Keep UI code thin: media orchestration belongs in `internal/app`, external tool
+adapters in `internal/backend`, and terminal concerns in `internal/cli`.
+
+Before opening a pull request, run:
+
+```bash
+make verify
+```
+
+Tests must not contact Twitch by default. Use fake runners or local media
+fixtures, preserve partial recordings on failure, and never commit downloaded
+media, cookies, tokens, or API secrets.
 
 ## Development flow
 
@@ -21,10 +32,10 @@ This repository is a base template for derived SUBCULT projects. Keep changes sm
 Prefer concise conventional-style subjects:
 
 ```text
-feat: add stack recipe
+feat: add recording quality selection
 docs: update Open Pilot guidance
-fix: correct make target detection
-chore: refresh template metadata
+fix: retain partial recording after remux failure
+chore: update media dependencies
 ```
 
 ## Open Pilot issues
@@ -37,7 +48,7 @@ Open Pilot requires:
 - `agent:queued`
 - a deterministic `Test Command`
 
-The template adds `ready-for-agent`; add `agent:queued` only after the issue is complete and ready for automation.
+The issue form adds `ready-for-agent`; add `agent:queued` only after the issue is complete and ready for automation.
 
 Good Open Pilot tasks are:
 
@@ -56,18 +67,16 @@ Default full check:
 make verify
 ```
 
-Examples for derived templates:
+Examples:
 
 ```bash
 go test ./...
-pnpm --dir web run test
-uv run pytest
-cargo test --all
-docker compose config --quiet
+go test -race ./...
+make integration
 ```
 
-## Template boundaries
+## Project boundaries
 
-This base template should stay stack-neutral. Do not add application scaffolding here unless the issue explicitly changes the role of this repository.
-
-Stack-specific scaffolds should live in derived template repositories.
+Keep Twitch API discovery, authenticated media, scheduling, persistence, and TUI
+framework dependencies out of v1 unless an approved issue explicitly expands
+scope and defines credential or lifecycle safety.

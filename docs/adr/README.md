@@ -1,5 +1,7 @@
 # Architecture Decision Records
 
+- [0001: Bootstrap twitchdl from the Go worker template](0001-bootstrap-twitchdl.md)
+
 Use ADRs for decisions that affect structure, dependencies, operations, security, or long-term maintenance.
 
 Suggested format:

@@ -1,4 +1,10 @@
-# Documentation
+# twitchdl documentation
+
+- [Usage](usage.md)
+- [Live recording](live-recording.md)
+- [Architecture](architecture.md)
+- [Troubleshooting](troubleshooting.md)
+- [Architectural decisions](adr/README.md)
 
 This directory is the current project knowledge base.
 

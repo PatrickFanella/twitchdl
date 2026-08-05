@@ -1,10 +1,17 @@
 # Security Policy
 
-## Supported scope
+Report security issues privately to the repository maintainers rather than in a
+public issue.
 
-This repository is a public base template. Security work here focuses on safe defaults, secret hygiene, and guidance for derived projects.
+Version 1 handles public Twitch URLs and channel names only. It does not accept
+or store Twitch client secrets, OAuth tokens, browser cookies, or subscriber-only
+content. Do not add secrets to command arguments, configuration, fixtures, logs,
+or issue reports.
 
-Derived repositories should add stack-specific security policy details before production use.
+Remote titles and channel names are untrusted input and must be sanitized before
+becoming filesystem paths. External tools must always be invoked with argument
+arrays, never by concatenating user input into a shell command. Failed media
+finalization must retain the raw recording instead of deleting recoverable data.
 
 ## Reporting a vulnerability
 
@@ -24,10 +31,9 @@ Include:
 
 Never commit:
 
-- `.env` or `.env.*` files, except `.env.example`
+- `.env` or `.env.*` files
 - API tokens or OAuth secrets
 - SSH keys or deploy keys
-- database dumps containing real data
 - private certificates or signing keys
 - webhook secrets
 
@@ -35,12 +41,12 @@ Use placeholders in docs and examples. Report only secret key names and presence
 
 ## Dependency and supply-chain hygiene
 
-Derived templates should:
+Contributors should:
 
-- commit lockfiles for application projects when the stack expects them
-- pin container base images deliberately
-- document update procedures
-- run dependency and container scans where appropriate
+- commit `go.sum`
+- review `yt-dlp`, Streamlink, Cobra, and Go updates deliberately
+- document media-tool compatibility changes
+- run dependency and static-analysis checks
 - keep generated caches out of git
 
 ## Open Pilot safety
